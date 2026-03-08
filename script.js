@@ -1,3 +1,44 @@
+// Функция переключения между вопросами
+function nextStep(stepNumber) {
+    // Скрываем все шаги
+    document.querySelectorAll('.step').forEach(step => {
+        step.style.display = 'none';
+    });
+    // Показываем нужный шаг
+    const next = document.getElementById('step' + stepNumber);
+    if (next) {
+        next.style.display = 'flex';
+        next.classList.add('active'); // для анимации из CSS
+    }
+}
+
+// Пранк: Кнопка "Не хочу" убегает от пальца/мышки
+function moveButton() {
+    const btn = document.getElementById('noBtn');
+    // Случайные координаты
+    const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
+    const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
+    
+    btn.style.position = 'fixed';
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+}
+
+// ОСТАЛЬНОЙ ТВОЙ КОД (Который запускает 3D сцену)
+const startButton = document.getElementById('startButton');
+const bgMusic = document.getElementById('bgMusic');
+
+if (startButton) {
+    startButton.addEventListener('click', () => {
+        document.getElementById('startScreen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('startScreen').style.display = 'none';
+            document.querySelector('.intro').style.display = 'flex';
+            bgMusic.play();
+            runIntro(); // Твоя функция с текстом "Аиша Жарылкас"
+        }, 600);
+    });
+}
 // Финальный код для Аиши. Реалистичное сердце и золото.
 const startButton = document.getElementById('startButton');
 const bgMusic = document.getElementById('bgMusic');
@@ -213,3 +254,4 @@ function init3D() {
 
 // Реакция на изменение размера окна
 window.addEventListener('resize', () => { location.reload(); });
+
