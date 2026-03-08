@@ -1,12 +1,9 @@
-// --- 1. ЛОГИКА ПРАНК-ОПРОСА ---
-
+// --- 1. ЛОГИКА ОПРОСА ---
 function nextStep(stepNumber) {
-    // Скрываем текущий активный шаг
     document.querySelectorAll('.step').forEach(step => {
         step.style.display = 'none';
         step.classList.remove('active');
     });
-    // Показываем следующий
     const next = document.getElementById('step' + stepNumber);
     if (next) {
         next.style.display = 'flex';
@@ -14,163 +11,193 @@ function nextStep(stepNumber) {
     }
 }
 
-// Функция для убегающей кнопки "Не хочу"
 function moveButton() {
     const btn = document.getElementById('noBtn');
-    // Случайные координаты в пределах экрана (с отступом)
     const x = Math.random() * (window.innerWidth - btn.offsetWidth - 100);
     const y = Math.random() * (window.innerHeight - btn.offsetHeight - 100);
-    
     btn.style.position = 'fixed';
     btn.style.left = x + 'px';
     btn.style.top = y + 'px';
-    btn.style.zIndex = "1001";
 }
 
-// --- 2. ЗАПУСК ОСНОВНОЙ АНИМАЦИИ ---
-
+// --- 2. ЗАПУСК И ИНТРО ---
 const startButton = document.getElementById('startButton');
 const bgMusic = document.getElementById('bgMusic');
 
-if (startButton) {
-    startButton.addEventListener('click', () => {
-        // Убираем стартовый экран
-        document.getElementById('startScreen').style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('startScreen').style.display = 'none';
-            // Показываем экран с текстом "Аиша Жарылкас"
-            const intro = document.querySelector('.intro');
-            intro.style.display = 'flex';
-            
-            // Запускаем музыку
-            bgMusic.play().catch(() => console.log("Музыка ждет клика"));
-            
-            runIntroSequence();
-        }, 600);
-    });
-}
+startButton.addEventListener('click', () => {
+    document.getElementById('startScreen').style.opacity = '0';
+    setTimeout(() => {
+        document.getElementById('startScreen').style.display = 'none';
+        document.querySelector('.intro').style.display = 'flex';
+        bgMusic.play().catch(() => console.log("Music ready"));
+        runIntroText();
+    }, 1000);
+});
 
-function runIntroSequence() {
+function runIntroText() {
     const words = document.querySelectorAll('.word');
     words.forEach((word, i) => {
         setTimeout(() => word.classList.add('visible'), i * 1600);
     });
 
-    // Через 8.5 секунд переходим к 3D сердцу
     setTimeout(() => {
         document.querySelector('.intro').style.opacity = '0';
         setTimeout(() => {
             document.querySelector('.intro').style.display = 'none';
             document.getElementById('scene3d').style.display = 'block';
-            init3DScene();
+            initCinematicScene();
         }, 1500);
     }, 8500);
 }
 
-// --- 3. РЕАЛИСТИЧНОЕ 3D СЕРДЦЕ И КОСМОС ---
-
-function init3DScene() {
+// --- 3. КИНЕМАТОГРАФИЧНОЕ 3D ---
+function initCinematicScene() {
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x000000, 0.012);
+    scene.background = new THREE.Color(0x000000);
+    scene.fog = new THREE.FogExp2(0x000000, 0.008);
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1500);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     document.getElementById('scene3d').appendChild(renderer.domElement);
 
-    // Контроллеры для вращения пальцем
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enabled = false; // Отключаем до конца анимации облета
     controls.enableDamping = true;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
-    controls.enablePan = false;
 
-    // СВЕТ
-    const pLight = new THREE.PointLight(0xff4b8a, 5, 100);
-    scene.add(pLight);
-    scene.add(new THREE.AmbientLight(0x222222));
+    // Звезды на фоне
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = [];
+    for(let i=0; i<10000; i++) {
+        starPos.push((Math.random()-0.5)*1500, (Math.random()-0.5)*1500, (Math.random()-0.5)*1500);
+    }
+    starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPos, 3));
+    const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.7, transparent: true, opacity: 0.5 });
+    scene.add(new THREE.Points(starGeo, starMat));
 
-    // СОЗДАНИЕ СЕРДЦА
-    const heartGroup = new THREE.Group();
-    const heartGeo = new THREE.BufferGeometry();
-    const heartPos = [];
-    const heartSizes = [];
-    
-    // Текстура сияющей точки
-    const spark = new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/spark1.png');
+    // ГРУППА ГАЛАКТИКИ
+    const galaxyGroup = new THREE.Group();
+    scene.add(galaxyGroup);
 
-    for (let i = 0; i < 8000; i++) {
+    // СЕРДЦЕ (Большое и яркое)
+    const heartPoints = [];
+    for (let i = 0; i < 12000; i++) {
         const t = Math.random() * Math.PI * 2;
         const x = 16 * Math.pow(Math.sin(t), 3);
         const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
-        const z = (Math.random() - 0.5) * 8;
-        const noise = (Math.random() - 0.5) * 2;
-        heartPos.push((x + noise) * 0.6, (y + noise) * 0.6, z * 0.6);
-        heartSizes.push(Math.random() * 0.5);
+        const z = (Math.random() - 0.5) * 10;
+        heartPoints.push(x * 1.2, y * 1.2, z * 1.2);
     }
-    heartGeo.setAttribute('position', new THREE.Float32BufferAttribute(heartPos, 3));
-    
-    const heartMat = new THREE.PointsMaterial({
-        color: 0xff0044,
-        size: 0.4,
-        map: spark,
-        blending: THREE.AdditiveBlending,
-        transparent: true,
-        depthWrite: false
-    });
-    const heart = new THREE.Points(heartGeo, heartMat);
-    heartGroup.add(heart);
+    const heartGeo = new THREE.BufferGeometry();
+    heartGeo.setAttribute('position', new THREE.Float32BufferAttribute(heartPoints, 3));
+    const spark = new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/spark1.png');
+    const heartMat = new THREE.PointsMaterial({ color: 0xff0055, size: 0.6, map: spark, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false });
+    const heartPointsMesh = new THREE.Points(heartGeo, heartMat);
+    galaxyGroup.add(heartPointsMesh);
 
-    // ЗОЛОТОЕ КОЛЬЦО
-    const ringGeo = new THREE.BufferGeometry();
-    const ringPos = [];
-    for (let i = 0; i < 3500; i++) {
-        const a = Math.random() * Math.PI * 2;
-        const r = 20 + Math.random() * 5;
-        ringPos.push(Math.cos(a) * r, (Math.random() - 0.5) * 1.5, Math.sin(a) * r);
-    }
-    ringGeo.setAttribute('position', new THREE.Float32BufferAttribute(ringPos, 3));
-    const ringMat = new THREE.PointsMaterial({ color: 0xffaa00, size: 0.15, map: spark, blending: THREE.AdditiveBlending, transparent: true });
-    const ring = new THREE.Points(ringGeo, ringMat);
-    heartGroup.add(ring);
-    scene.add(heartGroup);
+    // ТРИ БЕЛЫХ КОЛЬЦА
+    const createRing = (radius, count, size) => {
+        const rPos = [];
+        for (let i = 0; i < count; i++) {
+            const a = Math.random() * Math.PI * 2;
+            const r = radius + (Math.random() - 0.5) * 4;
+            rPos.push(Math.cos(a) * r, (Math.random() - 0.5) * 0.5, Math.sin(a) * r);
+        }
+        const rGeo = new THREE.BufferGeometry();
+        rGeo.setAttribute('position', new THREE.Float32BufferAttribute(rPos, 3));
+        const rMat = new THREE.PointsMaterial({ color: 0xffffff, size: size, map: spark, blending: THREE.AdditiveBlending, transparent: true, opacity: 0.8 });
+        return new THREE.Points(rGeo, rMat);
+    };
 
-    // 100 ФОТОГРАФИЙ (из 8 файлов)
-    const loader = new THREE.TextureLoader();
+    const ring1 = createRing(35, 4000, 0.2); // Внутреннее
+    const ring2 = createRing(50, 6000, 0.25); // Среднее
+    const ring3 = createRing(65, 3000, 0.15); // Внешнее
+    galaxyGroup.add(ring1, ring2, ring3);
+
+    // ФОТОГРАФИИ (Карусель по кольцу)
     const photoFiles = ["photos/photo1.jpg", "photos/photo2.jpg", "photos/photo3.jpg", "photos/photo4.jpg", "photos/photo5.jpg", "photos/photo6.jpg", "photos/photo7.jpg", "photos/photo8.jpg"];
     const photoMeshes = [];
+    const loader = new THREE.TextureLoader();
 
     for (let i = 0; i < 100; i++) {
         loader.load(photoFiles[i % 8], (tex) => {
-            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(5, 5), new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide }));
-            mesh.position.set((Math.random()-0.5)*120, (Math.random()-0.5)*80, (Math.random()-0.5)*120);
-            mesh.userData = { a: Math.random()*10, s: 0.002 + Math.random()*0.004, r: 30 + Math.random()*30 };
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide }));
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 45 + Math.random() * 10;
+            mesh.userData = { angle: angle, speed: 0.002 + Math.random() * 0.002, radius: radius };
             scene.add(mesh);
             photoMeshes.push(mesh);
         });
     }
 
-    camera.position.set(0, 10, 70);
+    // --- КИНЕМАТОГРАФИЧЕСКАЯ КАМЕРА ---
+    camera.position.set(0, 300, 500); // Стартовая позиция в космосе
+    let cineTime = 0;
+    let isCineActive = true;
 
     function animate() {
         requestAnimationFrame(animate);
-        heartGroup.rotation.y += 0.002;
-        ring.rotation.y -= 0.004;
+        const time = Date.now() * 0.001;
+
+        if (isCineActive) {
+            cineTime += 0.005;
+            // Облет 360 сверху вниз
+            camera.position.x = Math.sin(cineTime * 2) * 150;
+            camera.position.z = Math.cos(cineTime * 2) * 150;
+            camera.position.y = Math.cos(cineTime) * 80;
+            camera.lookAt(0, 0, 0);
+
+            if (cineTime > Math.PI) {
+                isCineActive = false;
+                controls.enabled = true;
+                // Вспышка колец
+                ring1.material.size = 1.5;
+                ring2.material.size = 1.5;
+                setTimeout(() => {
+                    ring1.material.size = 0.2;
+                    ring2.material.size = 0.25;
+                    showFinalTexts();
+                }, 1000);
+            }
+        }
+
+        // Анимация объектов
+        heartPointsMesh.rotation.y += 0.002;
+        ring1.rotation.y += 0.008;
+        ring2.rotation.y -= 0.005;
+        ring3.rotation.y += 0.003;
 
         photoMeshes.forEach(m => {
-            m.userData.a += m.userData.s;
-            m.position.x = Math.cos(m.userData.a) * m.userData.r;
-            m.position.z = Math.sin(m.userData.a) * m.userData.r;
-            m.lookAt(0,0,0);
+            m.userData.angle += m.userData.speed;
+            m.position.x = Math.cos(m.userData.angle) * m.userData.radius;
+            m.position.z = Math.sin(m.userData.angle) * m.userData.radius;
+            m.position.y = Math.sin(time + m.userData.angle) * 2; // Легкая волна
+            m.lookAt(0, 0, 0);
         });
 
         controls.update();
         renderer.render(scene, camera);
     }
-    animate();
 
-    setTimeout(() => { document.getElementById('finalTitle').style.opacity = '1'; }, 2000);
+    function showFinalTexts() {
+        const wish = document.getElementById('wishText');
+        const final = document.getElementById('finalTitle');
+
+        wish.style.opacity = '1';
+        wish.style.transform = 'scale(1)';
+
+        setTimeout(() => {
+            wish.style.opacity = '0';
+            wish.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                final.style.opacity = '1';
+                final.style.transform = 'scale(1.1)';
+            }, 1500);
+        }, 5000);
+    }
+
+    animate();
 }
 
 window.addEventListener('resize', () => { location.reload(); });
