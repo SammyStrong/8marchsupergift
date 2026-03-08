@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>8 Марта для Аиши ❤️</title>
+    <title>8 Марта для  </title>
     
     <link href="https://fonts.googleapis.com/css2?family=Alice&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
     
@@ -21,7 +21,7 @@
                 <h1>Ты Аиша?</h1>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(2)">Да</button>
-                    <button class="btn-no" onclick="alert('Ну и ладно, тогда подарок удаляется... шучу! Пробуй еще раз 😂');">Нет</button>
+                    <button class="btn-no" onclick="alert('Тогда вход дальше запрещается!');">Нет</button>
                 </div>
             </div>
 
@@ -29,7 +29,7 @@
                 <h1>Точно? 🧐</h1>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(3)">Даа</button>
-                    <button class="btn-no" onclick="alert('А мне кажется, ты врешь! 😏'); nextStep(1);">Неет</button>
+                    <button class="btn-no" onclick="alert('Вам дальше нельзя 😏'); nextStep(1);">Неет</button>
                 </div>
             </div>
 
@@ -53,7 +53,7 @@
                 <h1>У Аишы IQ равен...??? 🤭</h1>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(6)">96</button>
-                    <button class="btn-no" onclick="alert('Ого, какая высокая самооценка! Но мы-то знаем правду... 😉'); nextStep(6);">111</button>
+                    <button class="btn-no" onclick="alert('Допустим приму ответ. Но мы с тобой же знаем правду😉'); nextStep(6);">111</button>
                 </div>
             </div>
 
@@ -61,7 +61,7 @@
                 <h1>Значит все-таки признаешь 🥰</h1>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(7)">Да</button>
-                    <button class="btn-no" onclick="alert('Отрицание — первая стадия! Но кнопка Да работает лучше 😂');">Нет</button>
+                    <button id="noBtn" class="btn-no" onmouseover="moveButton()" onclick="moveButton()">Неа</button>
                 </div>
             </div>
 
@@ -97,3 +97,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
