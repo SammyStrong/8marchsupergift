@@ -14,11 +14,63 @@
 <body>
 
     <div id="startScreen">
-        <div class="glass-card">
-            <h1>У тебя 1 новое сообщение 💌</h1>
-            <button id="startButton">ОТКРЫТЬ</button>
+    <div class="glass-card">
+        <div class="step active" id="step1">
+            <h1>Ты Аиша?</h1>
+            <div class="btn-group">
+                <button onclick="nextStep(2)">Да</button>
+                <button onclick="alert('Ну и ладно, тогда подарок удаляется... шучу! Пробуй еще раз 😂');">Нет</button>
+            </div>
+        </div>
+
+        <div class="step" id="step2">
+            <h1>Точно? 🧐</h1>
+            <div class="btn-group">
+                <button onclick="nextStep(3)">Даа</button>
+                <button onclick="alert('А мне кажется, ты врешь! 😏'); nextStep(1);">Неет</button>
+            </div>
+        </div>
+
+        <div class="step" id="step3">
+            <h1>Прям прям точноо??? 🤔</h1>
+            <div class="btn-group">
+                <button onclick="nextStep(4)">ДА</button>
+                <button onclick="nextStep(4)">ДАААААААА</button>
+            </div>
+        </div>
+
+        <div class="step" id="step4">
+            <h1>Тогда ответишь на мои вопросы, окей😏?</h1>
+            <div class="btn-group">
+                <button onclick="nextStep(5)">Да, конечно</button>
+                <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">Не хочу</button>
+            </div>
+        </div>
+
+        <div class="step" id="step5">
+            <h1>У Аишы IQ равен...??? 🤭</h1>
+            <div class="btn-group">
+                <button onclick="nextStep(6)">96</button>
+                <button onclick="alert('Ого, какая высокая самооценка! Но мы-то знаем правду... 😉'); nextStep(6);">111</button>
+            </div>
+        </div>
+
+        <div class="step" id="step6">
+            <h1>Значит все-таки признаешь 🥰</h1>
+            <div class="btn-group">
+                <button onclick="nextStep(7)">Да</button>
+                <button onclick="alert('Отрицание — первая стадия! Но кнопка Да работает лучше 😂');">Нет</button>
+            </div>
+        </div>
+
+        <div class="step" id="step7">
+            <h1>Ладноо не буду тебя мучить, нажми на меня и увидишь свой подарок</h1>
+            <div class="btn-group">
+                <button id="startButton">НАЖМИ НА МЕНЯ ❤️</button>
+            </div>
         </div>
     </div>
+</div>
 
     <audio id="bgMusic" loop>
         <source src="music.mp3" type="audio/mpeg">
@@ -42,3 +94,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
