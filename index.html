@@ -1,46 +1,40 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>8 Марта❤️</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поздравление ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
-<audio autoplay loop>
-  <source src="music.mp3">
-</audio>
+    <div id="startScreen">
+        <div class="glass-card">
+            <h1>У тебя 1 новое сообщение 💌</h1>
+            <button id="startButton">ОТКРЫТЬ</button>
+        </div>
+    </div>
 
-<div class="screen intro">
-  <h1 class="word">АИША ЖАРЫЛКАС</h1>
-  <h1 class="word">ПОЗДРАВЛЯЮ</h1>
-  <h1 class="word">ТЕБЯ</h1>
-  <h1 class="word">С</h1>
-  <h1 class="word">8 МАРТА</h1>
-  <h1 class="word">ПОДРУЖКА❤️</h1>
-</div>
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
-<div class="screen wishes">
-  <h2>ЖЕЛАЮ ТЕБЕ САМОЕ ХОРОШЕЕ</h2>
-  <h2>ЧТО ТОЛЬКО МОЖЕТ БЫТЬ НА ЭТОМ СВЕТЕ</h2>
-  <h2>ОСТАВАЙСЯ ТАКОЙ ЖЕ</h2>
-  <h2>ПРИНЦЕССОЙ КРАСАТУЛЬКА😘</h2>
-</div>
+    <div class="screen intro" style="display:none;">
+        <div class="content">
+            <h1 class="word">АИША ЖАРЫЛКАС</h1>
+            <h1 class="word">С 8 МАРТА ТЕБЯ! 🌸</h1>
+            <h1 class="word">STAY AS BEAUTIFUL!</h1>
+            <h1 class="word">MY BLONDE FRIEND ❤️</h1>
+        </div>
+    </div>
 
-<div id="scene3d"></div>
+    <div id="scene3d"></div>
 
-<div id="finalText">С 8 МАРТА АНГЕЛОЧЕК❤️</div>
+    <div id="overlayText">
+        <h2 id="finalTitle">Only For U, Aisha ❤️</h2>
+    </div>
 
-<div id="finalButton" style="display:none;">
-  <button>НАЖМИ ЕЩЁ РАЗ❤️</button>
-</div>
-
-<div id="thankYou" style="display:none;">
-  ЦЕНЮ НАШУ ДРУЖБУ💖
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
-
