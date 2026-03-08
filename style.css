@@ -1,4 +1,4 @@
-/* --- ОСНОВНЫЕ НАСТРОЙКИ --- */
+/* --- БАЗОВЫЕ НАСТРОЙКИ --- */
 body {
     margin: 0;
     padding: 0;
@@ -8,10 +8,10 @@ body {
     color: white;
     font-family: 'Montserrat', sans-serif;
     overflow: hidden;
-    -webkit-tap-highlight-color: transparent; /* Убираем синий блик при клике на мобилках */
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* --- СТАРТОВЫЙ ЭКРАН (ПРАНК-КВЕСТ) --- */
+/* --- СТАРТОВЫЙ ЭКРАН (ОПРОС) --- */
 #startScreen {
     position: fixed;
     inset: 0;
@@ -24,73 +24,60 @@ body {
 }
 
 .glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: 45px 25px;
-    border-radius: 35px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 35px 20px;
+    border-radius: 30px;
     text-align: center;
     width: 85%;
-    max-width: 420px;
+    max-width: 380px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .step {
     display: none;
     flex-direction: column;
     align-items: center;
-    animation: slideIn 0.5s ease-out;
 }
 
 .step.active {
     display: flex;
+    animation: fadeIn 0.5s ease-out;
 }
 
-.glass-card h1 {
-    font-size: clamp(20px, 5vw, 26px);
-    font-weight: 300;
-    margin-bottom: 30px;
-    line-height: 1.4;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-/* Кнопки */
 .btn-group {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     justify-content: center;
+    margin-top: 25px;
     flex-wrap: wrap;
 }
 
 button {
-    padding: 14px 32px;
-    font-size: 15px;
-    font-family: 'Montserrat', sans-serif;
+    padding: 12px 28px;
+    font-size: 14px;
     font-weight: 600;
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .btn-yes {
     background: linear-gradient(135deg, #ff4b8a, #ff94c2);
     color: white;
-    box-shadow: 0 8px 20px rgba(255, 75, 138, 0.4);
+    box-shadow: 0 5px 15px rgba(255, 75, 138, 0.3);
 }
-
-.btn-yes:hover { transform: translateY(-3px) scale(1.05); }
-.btn-yes:active { transform: scale(0.95); }
 
 .btn-no {
-    background: rgba(255, 255, 255, 0.08);
-    color: #bbb;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* --- ИНТРО ТЕКСТ (АИША ЖАРЫЛКАС...) --- */
+/* --- ИНТРО-ТЕКСТ (АИША ЖАРЫЛКАС...) --- */
 .screen.intro {
     position: fixed;
     inset: 0;
@@ -98,20 +85,20 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    transition: opacity 1.5s ease;
+    z-index: 1500;
+    transition: opacity 1.2s ease;
 }
 
 .word {
     opacity: 0;
     font-family: 'Alice', serif;
-    font-size: clamp(26px, 7vw, 55px);
+    font-size: clamp(24px, 7vw, 48px);
     text-align: center;
-    margin: 12px 0;
+    margin: 10px 0;
     color: #fff;
-    text-shadow: 0 0 20px rgba(255, 75, 138, 0.8), 0 0 40px rgba(255, 75, 138, 0.3);
-    transform: translateY(30px);
-    transition: 1.8s ease;
+    text-shadow: 0 0 15px #ff4b8a, 0 0 30px rgba(255, 75, 138, 0.5);
+    transform: translateY(25px);
+    transition: 1.5s ease-out;
 }
 
 .word.visible {
@@ -119,29 +106,30 @@ button {
     transform: translateY(0);
 }
 
-/* --- ТЕКСТ ПОВЕРХ 3D (ПРИНЦЕССКА / ONLY FOR U) --- */
+/* --- ТЕКСТ ВНУТРИ КОСМОСА (ПРИНЦЕССКА / ONLY FOR U) --- */
 #overlayText {
-    position: absolute;
-    top: 18%;
+    position: fixed; /* Фиксируем поверх 3D сцены */
+    top: 22%;
+    left: 0;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: none;
-    z-index: 500;
+    pointer-events: none; /* Чтобы не мешало крутить планету */
+    z-index: 9999; /* Выше всех объектов */
 }
 
 #wishText, #finalTitle {
     position: absolute;
-    font-family: 'Alice', serif;
-    font-size: clamp(18px, 4.5vw, 40px);
-    color: #ffd1e3;
-    text-align: center;
     width: 90%;
     opacity: 0;
-    transform: scale(0.9);
-    transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
-    text-shadow: 0 0 15px #ff4b8a, 0 0 30px rgba(255, 75, 138, 0.6);
+    font-family: 'Alice', serif;
+    font-size: clamp(20px, 6vw, 38px);
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 0 0 15px #ff4b8a, 0 0 35px rgba(255, 75, 138, 0.8);
+    transform: translateY(30px) scale(0.9);
+    transition: opacity 1.5s ease, transform 1.5s ease;
 }
 
 /* --- 3D КОНТЕЙНЕР --- */
@@ -150,16 +138,15 @@ button {
     inset: 0;
     z-index: 100;
     display: none;
+    background: #000;
 }
 
 /* АНИМАЦИИ */
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-/* Пранк кнопка "Не хочу" */
 #noBtn {
-    transition: left 0.2s ease, top 0.2s ease;
-    z-index: 2500;
+    transition: left 0.1s ease, top 0.1s ease;
 }
