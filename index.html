@@ -3,20 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>8 Марта❤️</title>
-    
+    <title>Для Аиши ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Alice&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="startScreen">
-        <div class="glass-card" id="quiz-container">
-            
+        <div class="glass-card">
             <div class="step active" id="step1">
                 <h1>Ты Аиша?</h1>
                 <div class="btn-group">
@@ -61,7 +57,7 @@
                 <h1>Значит все-таки признаешь 🥰</h1>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(7)">Да</button>
-                    <button class="btn-no" onclick="alert('Да');">Нет</button>
+                    <button class="btn-no" onclick="alert('Да'); nextStep(7);">Нет</button>
                 </div>
             </div>
 
@@ -71,13 +67,10 @@
                     <button id="startButton" class="btn-yes">НАЖМИ НА МЕНЯ ❤️</button>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg"></audio>
 
     <div class="screen intro" style="display:none;">
         <div class="content">
@@ -98,4 +91,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
