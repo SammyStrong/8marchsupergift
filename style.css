@@ -1,4 +1,4 @@
-/* --- 1. ОСНОВНЫЕ НАСТРОЙКИ --- */
+/* --- ОСНОВНЫЕ НАСТРОЙКИ --- */
 body {
     margin: 0;
     padding: 0;
@@ -7,106 +7,111 @@ body {
     background: #000;
     color: white;
     font-family: 'Montserrat', sans-serif;
-    overflow: hidden; /* Чтобы не было прокрутки */
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent; /* Убираем синий блик при клике на мобилках */
 }
 
-/* --- 2. СТАРТОВЫЙ ЭКРАН (КВЕСТ) --- */
+/* --- СТАРТОВЫЙ ЭКРАН (ПРАНК-КВЕСТ) --- */
 #startScreen {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle, #1a1a1a, #000);
+    background: radial-gradient(circle at center, #1a0b1a 0%, #000000 100%);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    transition: opacity 0.8s ease;
+    z-index: 2000;
+    transition: opacity 1s ease;
 }
 
 .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 40px 20px;
-    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 45px 25px;
+    border-radius: 35px;
     text-align: center;
-    width: 90%;
-    max-width: 400px;
+    width: 85%;
+    max-width: 420px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
 }
 
-.glass-card h1 {
-    font-size: 24px;
-    font-weight: 300;
-    margin-bottom: 30px;
-    line-height: 1.4;
-}
-
-/* Настройка шагов опроса */
 .step {
-    display: none; /* Скрыты по умолчанию */
+    display: none;
     flex-direction: column;
     align-items: center;
+    animation: slideIn 0.5s ease-out;
 }
 
 .step.active {
-    display: flex; /* Показываем активный шаг */
-    animation: fadeIn 0.5s forwards;
+    display: flex;
+}
+
+.glass-card h1 {
+    font-size: clamp(20px, 5vw, 26px);
+    font-weight: 300;
+    margin-bottom: 30px;
+    line-height: 1.4;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 /* Кнопки */
 .btn-group {
     display: flex;
-    gap: 15px;
+    gap: 12px;
     justify-content: center;
     flex-wrap: wrap;
 }
 
 button {
-    padding: 12px 30px;
-    font-size: 16px;
+    padding: 14px 32px;
+    font-size: 15px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .btn-yes {
-    background: linear-gradient(135deg, #ff4b8a, #ffb6d5);
+    background: linear-gradient(135deg, #ff4b8a, #ff94c2);
     color: white;
-    box-shadow: 0 5px 15px rgba(255, 75, 138, 0.3);
+    box-shadow: 0 8px 20px rgba(255, 75, 138, 0.4);
 }
 
+.btn-yes:hover { transform: translateY(-3px) scale(1.05); }
 .btn-yes:active { transform: scale(0.95); }
 
 .btn-no {
-    background: rgba(255, 255, 255, 0.1);
-    color: #ccc;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    color: #bbb;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* --- 3. ЭКРАН С ТЕКСТОМ (ИНТРО) --- */
+/* --- ИНТРО ТЕКСТ (АИША ЖАРЫЛКАС...) --- */
 .screen.intro {
     position: fixed;
     inset: 0;
+    background: #000;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 500;
-    background: #000;
+    z-index: 1000;
+    transition: opacity 1.5s ease;
 }
 
 .word {
     opacity: 0;
     font-family: 'Alice', serif;
-    font-size: clamp(28px, 8vw, 60px);
-    margin: 10px 0;
-    text-shadow: 0 0 20px rgba(255, 75, 138, 0.7);
-    transform: translateY(20px);
-    transition: 1.5s ease;
+    font-size: clamp(26px, 7vw, 55px);
+    text-align: center;
+    margin: 12px 0;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 75, 138, 0.8), 0 0 40px rgba(255, 75, 138, 0.3);
+    transform: translateY(30px);
+    transition: 1.8s ease;
 }
 
 .word.visible {
@@ -114,38 +119,47 @@ button {
     transform: translateY(0);
 }
 
-/* --- 4. 3D СЦЕНА И ФИНАЛ --- */
+/* --- ТЕКСТ ПОВЕРХ 3D (ПРИНЦЕССКА / ONLY FOR U) --- */
+#overlayText {
+    position: absolute;
+    top: 18%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 500;
+}
+
+#wishText, #finalTitle {
+    position: absolute;
+    font-family: 'Alice', serif;
+    font-size: clamp(18px, 4.5vw, 40px);
+    color: #ffd1e3;
+    text-align: center;
+    width: 90%;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 0 15px #ff4b8a, 0 0 30px rgba(255, 75, 138, 0.6);
+}
+
+/* --- 3D КОНТЕЙНЕР --- */
 #scene3d {
     position: fixed;
     inset: 0;
-    z-index: 10;
-}
-
-#overlayText {
-    position: absolute;
-    top: 15%;
-    width: 100%;
-    text-align: center;
     z-index: 100;
-    pointer-events: none;
+    display: none;
 }
 
-#finalTitle {
-    font-family: 'Alice', serif;
-    font-size: clamp(24px, 6vw, 45px);
-    color: #ffb6d5;
-    text-shadow: 0 0 25px #ff4b8a;
-    opacity: 0;
-    transition: 3s ease;
+/* АНИМАЦИИ */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Анимации */
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-/* Чтобы кнопка "Не хочу" летала поверх всего */
+/* Пранк кнопка "Не хочу" */
 #noBtn {
-    z-index: 1100;
+    transition: left 0.2s ease, top 0.2s ease;
+    z-index: 2500;
 }
