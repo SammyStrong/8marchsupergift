@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>8 Марта для  </title>
+    <title>8 Марта❤️</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Alice&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
     
@@ -15,7 +15,7 @@
 <body>
 
     <div id="startScreen">
-        <div class="glass-card">
+        <div class="glass-card" id="quiz-container">
             
             <div class="step active" id="step1">
                 <h1>Ты Аиша?</h1>
@@ -29,7 +29,7 @@
                 <h1>Точно? 🧐</h1>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(3)">Даа</button>
-                    <button class="btn-no" onclick="alert('Вам дальше нельзя 😏'); nextStep(1);">Неет</button>
+                    <button class="btn-no" onclick="alert('Дальше не могу вас запустить😏'); nextStep(1);">Неет</button>
                 </div>
             </div>
 
@@ -53,7 +53,7 @@
                 <h1>У Аишы IQ равен...??? 🤭</h1>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(6)">96</button>
-                    <button class="btn-no" onclick="alert('Допустим приму ответ. Но мы с тобой же знаем правду😉'); nextStep(6);">111</button>
+                    <button class="btn-no" onclick="alert('Допустим приму ответ, но мы с тобой знаем правду😉'); nextStep(6);">111</button>
                 </div>
             </div>
 
@@ -61,7 +61,7 @@
                 <h1>Значит все-таки признаешь 🥰</h1>
                 <div class="btn-group">
                     <button class="btn-yes" onclick="nextStep(7)">Да</button>
-                    <button id="noBtn" class="btn-no" onmouseover="moveButton()" onclick="moveButton()">Неа</button>
+                    <button class="btn-no" onclick="alert('Да');">Нет</button>
                 </div>
             </div>
 
@@ -91,10 +91,10 @@
     <div id="scene3d"></div>
 
     <div id="overlayText">
+        <h2 id="wishText">Оставайся такой же принцесской красатулька😘</h2>
         <h2 id="finalTitle">Only For U, Aisha ❤️</h2>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
